@@ -31,6 +31,25 @@ Masr Club follows the Clean Architecture pattern to maintain separation of conce
 - **Repository Implementations**: Concrete implementations of repositories.
 - **Controller with BLoC (Business Logic Component)**: Manage the application's state and business logic using the BLoC pattern.
 
+```
+└── lib/
+    ├── domain/               # Domain layer
+    │   ├── entities/         # Domain entities
+    │   ├── repositories/     # Abstract repositories interfaces
+    │   └── use_cases/        # Business logic (use cases)
+    │
+    ├── data/                 # Data layer
+    │   ├── models/           # Data models
+    │   ├── repositories_impl/# Implementations of repositories
+    │   └── datasources/      # Data sources (e.g., API, database)
+    │
+    └── presentation/         # Presentation layer
+        ├── bloc/             # Business logic components (BLoC)
+        ├── screens/          # UI screens
+        └── widgets/          # UI widgets
+```
+  
+
 ## Technologies Used
 - **Flutter**: Framework for building cross-platform mobile applications.
 - **Google Maps Flutter**: Plugin for integrating Google Maps into Flutter apps.
