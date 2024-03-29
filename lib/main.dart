@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:masr_club/app/presentation/manager/event_bloc.dart';
 import 'package:masr_club/app/presentation/pages/event_screen.dart';
 import 'package:masr_club/app/presentation/pages/home_screen.dart';
-import 'package:masr_club/dependency_injection.dart';
+import 'package:masr_club/core/dependency_injection.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

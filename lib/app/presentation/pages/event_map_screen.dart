@@ -5,6 +5,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:masr_club/app/domain/entities/event.dart';
+import 'package:masr_club/core/constants.dart';
 
 class EventMapScreen extends StatefulWidget {
   final Event event;
@@ -54,8 +55,7 @@ class _EventMapScreenState extends State<EventMapScreen> {
     PolylinePoints polylinePoints = PolylinePoints();
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyATHyo6xXgRRggSUoayBnMhwpfuOKwXYNY',
-      // Replace with your Google Maps API key
+      googleMapsAPIkey,
       PointLatLng(currentLocation!.latitude!, currentLocation!.longitude!),
       PointLatLng(widget.event.latitude, widget.event.longitude),
     );
