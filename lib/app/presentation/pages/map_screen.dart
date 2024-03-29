@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 import '../manager/event_bloc.dart';
 
@@ -15,8 +18,9 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   late CameraPosition initialCameraPosition;
 
-  late GoogleMapController googleMapController;
+  final Completer<GoogleMapController> _controller = Completer();
   Set<Marker> markers = {};
+  LocationData? currentLocation;
 
   @override
   void initState() {
@@ -24,7 +28,31 @@ class _MapScreenState extends State<MapScreen> {
       target: LatLng(30.057204211139034, 31.330601125682183),
       zoom: 15,
     );
+    getCurrentLocation();
+
     super.initState();
+  }
+
+  Future<void> getCurrentLocation() async {
+    Location location = Location();
+
+    try {
+      currentLocation = await location.getLocation();
+      GoogleMapController googleMapController = await _controller.future;
+
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            zoom: 13,
+            target:
+            LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+          ),
+        ),
+      );
+      setState(() {      });
+    } catch (e) {
+      print("Error getting location: $e");
+    }
   }
 
   @override
@@ -47,14 +75,26 @@ class _MapScreenState extends State<MapScreen> {
               ),
             );
           }).toSet();
-
+          markers.add(
+            Marker(
+              markerId: const MarkerId('current_location'),
+              position: LatLng(
+                currentLocation!.latitude!,
+                currentLocation!.longitude!,
+              ),
+              icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+              infoWindow: const InfoWindow(
+                title: 'Current Location',
+              ),
+            ),
+          );
           return Padding(
               padding: const EdgeInsets.all(8.0),
               child: GoogleMap(
                   initialCameraPosition: initialCameraPosition,
                   markers: markers,
                   onMapCreated: (controller) {
-                    googleMapController = controller;
+                    _controller.complete(controller);
                   }));
         } else if (state is EventError) {
           return Center(child: Text(state.message));
