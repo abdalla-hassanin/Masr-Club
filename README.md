@@ -20,6 +20,7 @@ Masr Club aims to provide users with an easy way to discover events in Egypt and
 - View event details including name, category, location, date, time, and description.
 - View events on a map.
 - Navigate to the event location using Google Maps.
+- When tapping on any event marker on the map, a route (polyline) is displayed between the current location and the selected event location.
 
 ## Architecture
 Masr Club follows the Clean Architecture pattern to maintain separation of concerns and facilitate scalability. The app is divided into the following components:
@@ -81,8 +82,11 @@ To run the app locally, follow these steps:
        ```swift
        GMSServices.provideAPIKey("YOUR_API_KEY")
        ```
-5. Run `flutter pub get` to install dependencies.
-6. Run the app using `flutter run`.
+5. Replace the Google Maps API key in the constants file:
+   - Locate the constants file where the Google Maps API key is stored (e.g., `lib/core/constants.dart`).
+   - Replace the placeholder API key with your actual API key (`const String googleMapsAPIkey='YOUR_API_KEY';`).
+6. Run `flutter pub get` to install dependencies.
+7. Run the app using `flutter run`.
 
 Make sure to replace `"YOUR_API_KEY"` with your actual Google Maps API key in the provided code snippets.
 
